@@ -4,7 +4,6 @@ const mode = document.querySelector("#mode");
 const title = document.querySelector("#title");
 import {add} from './index.js';
 
-
 setTimeout(function(){
     mode.addEventListener("click", changeMode);
 }, 200);

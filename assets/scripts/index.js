@@ -6,19 +6,15 @@ var tarefaNova;
 
 input.addEventListener("keypress", (e) => {
     if(e.key === "Enter") {
-        if(input.value == ''){
-            window.alert("Não é possível adicionar tarefas vazias!");
-        } else{
+        if(!inputVazio()){
             mainFunction();
         }
     }
 });
 
 add.addEventListener("click", () => {
-    if(input.value == ''){
-        window.alert("Não é possível adicionar tarefas vazias!");
-    } else {
-       mainFunction();
+    if(!inputVazio()){
+        mainFunction();
     }
 });
 
@@ -59,4 +55,13 @@ function criarBotoes(btnM, btnR){
 function limparInput(){
     input.value = '';
     input.focus();
+}
+
+function inputVazio(){
+    if(input.value == ''){
+        window.alert("Não é possível adicionar tarefas vazias!");
+        return true;
+    }
+
+    return false;
 }
