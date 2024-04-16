@@ -58,7 +58,7 @@ function limparInput(){
 }
 
 function inputVazio(){
-    if(input.value == ''){
+    if(input.value == '' || ' '){
         window.alert("Não é possível adicionar tarefas vazias!");
         return true;
     }
