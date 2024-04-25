@@ -3,6 +3,7 @@ export const add = document.querySelector("#add");
 const input = document.querySelector("#todo-input");
 
 var tarefaNova;
+// sessionStorage.clear();
 
 input.addEventListener("keypress", (e) => {
     if(e.key === "Enter") {
@@ -31,25 +32,59 @@ function criarTarefa(){
     tarefaNova = document.createElement("p");
     tarefaNova.innerHTML = valor;
 
-    criarBotoes(btnMade, btnRemove);
-    
+    criarRemove(btnRemove);
+    criarMade(btnMade);
+
     tarefasCriadas.appendChild(tarefaNova);
 
-    btnMade.addEventListener("click", (e) => {e.target.parentElement.classList.toggle("made-p")});
-    btnMade.addEventListener("click" , () =>{
+    btnMade.addEventListener("click", (e) => {
+        e.target.parentElement.classList.toggle("made-p")
+        if(e.target.parentElement.classList.contains("made-p")){
+            sessionStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `true`}));
+        } else{
+            sessionStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
+        }
+    });
+
+    btnMade.addEventListener("click" , () => {
         if(innerWidth >= 768){
             btnMade.classList.toggle("made-checked");
         }
     });
+
     btnRemove.addEventListener("click", (e) => {e.target.parentElement.remove()});
+    btnRemove.addEventListener("click", (e) => {destroySS(e.target.id)});
+
+    setSS(valor, btnMade, btnRemove.id);
 }
 
-function criarBotoes(btnM, btnR){
-    btnM.classList.add("made");
+function criarRemove(btnR){
     btnR.classList.add("remove");
 
-    tarefaNova.appendChild(btnM);
+    if(!sessionStorage.getItem('i')){
+        sessionStorage.setItem('i', '0');
+    } 
+
+    let index = JSON.parse(sessionStorage.getItem('i'));    
+    btnR.id = `${index}`;
+    sessionStorage.setItem('i', `${index+1}`);
+
     tarefaNova.appendChild(btnR);
+}
+
+function criarMade(btnM){
+    btnM.classList.add("made");
+
+    tarefaNova.appendChild(btnM);
+}
+
+
+function setSS(valor, btnM, btnR){
+    sessionStorage.setItem(`ativ${btnR}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
+}
+
+function destroySS(id){
+    sessionStorage.removeItem(`ativ${id}`)
 }
 
 function limparInput(){
@@ -65,5 +100,3 @@ function inputVazio(){
 
     return false;
 }
-
-//teste
