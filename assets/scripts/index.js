@@ -55,7 +55,7 @@ function criarTarefa(indexOfR, valor, mode, bool){
     tarefasCriadas.appendChild(tarefaNova);
 
     if(mode == 'true'){
-        btnMade.parentElement.classList.toggle("made-p");
+        btnMade.targetparentElement.classList.toggle("made-p");
         if(innerWidth >= 768){
             btnMade.classList.toggle("made-checked");
         }
