@@ -3,7 +3,9 @@ export const add = document.querySelector("#add");
 const input = document.querySelector("#todo-input");
 
 var tarefaNova;
-// sessionStorage.clear();
+
+
+// localStorage.clear();
 
 for(let i = 0; i < localStorage.length; i++){
     let ativ = localStorage.getItem(`ativ${i}`);
@@ -55,7 +57,7 @@ function criarTarefa(indexOfR, valor, mode, bool){
     tarefasCriadas.appendChild(tarefaNova);
 
     if(mode == 'true'){
-        btnMade.targetparentElement.classList.toggle("made-p");
+        btnMade.parentElement.classList.toggle("made-p");
         if(innerWidth >= 768){
             btnMade.classList.toggle("made-checked");
         }
