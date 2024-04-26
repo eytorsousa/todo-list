@@ -5,10 +5,10 @@ const input = document.querySelector("#todo-input");
 var tarefaNova;
 // sessionStorage.clear();
 
-for(let i = 0; i < sessionStorage.length; i++){
-    let ativ = sessionStorage.getItem(`ativ${i}`);
+for(let i = 0; i < localStorage.length; i++){
+    let ativ = localStorage.getItem(`ativ${i}`);
     if(ativ){
-        ativ = JSON.parse(sessionStorage.getItem(`ativ${i}`));
+        ativ = JSON.parse(localStorage.getItem(`ativ${i}`));
         let valor = ativ.ativ;
         let mode = ativ.mode;
 
@@ -65,9 +65,9 @@ function criarTarefa(indexOfR, valor, mode, bool){
         e.target.parentElement.classList.toggle("made-p");
 
         if(e.target.parentElement.classList.contains("made-p")){
-            sessionStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `true`}));
+            localStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `true`}));
         } else{
-            sessionStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
+            localStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
         }
 
         if(innerWidth >= 768){
@@ -89,16 +89,16 @@ function createButtons(btnR, btnM, indexOfR){
     btnM.classList.add("made");
     btnR.classList.add("remove");
 
-    if(!sessionStorage.getItem('i')){
-        sessionStorage.setItem('i', '0');
+    if(!localStorage.getItem('i')){
+        localStorage.setItem('i', '0');
     } 
 
     if(indexOfR >= 0){
         btnR.id = `${indexOfR}`;
     } else {
-        let index = JSON.parse(sessionStorage.getItem('i'));    
+        let index = JSON.parse(localStorage.getItem('i'));    
         btnR.id = `${index}`;
-        sessionStorage.setItem('i', `${index+1}`);
+        localStorage.setItem('i', `${index+1}`);
     }
 
     tarefaNova.appendChild(btnR);
@@ -106,11 +106,11 @@ function createButtons(btnR, btnM, indexOfR){
 }
 
 function createSS(valor, btnR){
-    sessionStorage.setItem(`ativ${btnR}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
+    localStorage.setItem(`ativ${btnR}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
 }
 
 function destroySS(id){
-    sessionStorage.removeItem(`ativ${id}`)
+    localStorage.removeItem(`ativ${id}`)
 }
 
 function limparInput(){
