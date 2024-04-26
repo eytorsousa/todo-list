@@ -5,6 +5,17 @@ const input = document.querySelector("#todo-input");
 var tarefaNova;
 // sessionStorage.clear();
 
+for(let i = 0; i < sessionStorage.length; i++){
+    let ativ = sessionStorage.getItem(`ativ${i}`);
+    if(ativ){
+        ativ = JSON.parse(sessionStorage.getItem(`ativ${i}`));
+        let valor = ativ.ativ;
+        let mode = ativ.mode;
+
+        criarTarefa(i, valor, mode, false);
+    }
+}
+
 input.addEventListener("keypress", (e) => {
     if(e.key === "Enter") {
         if(!inputVazio()){
@@ -24,62 +35,77 @@ function mainFunction(){
     limparInput();
 }
 
-function criarTarefa(){
-    var valor = input.value;
+function criarTarefa(indexOfR, valor, mode, bool){
+    if(valor && mode){
+        var valor = valor;
+        var mode = mode;
+    } else {
+        var valor = input.value;
+        bool = true;
+    }
+
     var btnMade = document.createElement("button");
     var btnRemove = document.createElement("button");
 
     tarefaNova = document.createElement("p");
-    tarefaNova.innerHTML = valor;
+    tarefaNova.innerText = valor;
 
-    criarRemove(btnRemove);
-    criarMade(btnMade);
+    createButtons(btnRemove, btnMade, indexOfR);
 
     tarefasCriadas.appendChild(tarefaNova);
 
+    if(mode == 'true'){
+        btnMade.parentElement.classList.toggle("made-p");
+        if(innerWidth >= 768){
+            btnMade.classList.toggle("made-checked");
+        }
+    }
+
     btnMade.addEventListener("click", (e) => {
-        e.target.parentElement.classList.toggle("made-p")
+        e.target.parentElement.classList.toggle("made-p");
+
         if(e.target.parentElement.classList.contains("made-p")){
             sessionStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `true`}));
         } else{
             sessionStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
         }
-    });
 
-    btnMade.addEventListener("click" , () => {
         if(innerWidth >= 768){
             btnMade.classList.toggle("made-checked");
         }
     });
 
-    btnRemove.addEventListener("click", (e) => {e.target.parentElement.remove()});
-    btnRemove.addEventListener("click", (e) => {destroySS(e.target.id)});
+    btnRemove.addEventListener("click", (e) => {
+        e.target.parentElement.remove();
+        destroySS(e.target.id);
+    });
 
-    setSS(valor, btnMade, btnRemove.id);
+    if(bool){
+        createSS(valor, btnRemove.id);
+    }
 }
 
-function criarRemove(btnR){
+function createButtons(btnR, btnM, indexOfR){
+    btnM.classList.add("made");
     btnR.classList.add("remove");
 
     if(!sessionStorage.getItem('i')){
         sessionStorage.setItem('i', '0');
     } 
 
-    let index = JSON.parse(sessionStorage.getItem('i'));    
-    btnR.id = `${index}`;
-    sessionStorage.setItem('i', `${index+1}`);
+    if(indexOfR >= 0){
+        btnR.id = `${indexOfR}`;
+    } else {
+        let index = JSON.parse(sessionStorage.getItem('i'));    
+        btnR.id = `${index}`;
+        sessionStorage.setItem('i', `${index+1}`);
+    }
 
     tarefaNova.appendChild(btnR);
-}
-
-function criarMade(btnM){
-    btnM.classList.add("made");
-
     tarefaNova.appendChild(btnM);
 }
 
-
-function setSS(valor, btnM, btnR){
+function createSS(valor, btnR){
     sessionStorage.setItem(`ativ${btnR}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
 }
 
