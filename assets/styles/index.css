@@ -323,6 +323,40 @@ section p {
         width: 80%;
         height: fit-content;
     }
+
+    .made:hover {
+        background-color: transparent;
+    }
+
+    .made:hover::after {
+        content: '';
+        width: 30px;
+        height: 30px;
+        background: url(../imgs/made.png);
+        background-size: 30px;
+        background-repeat: no-repeat;
+        position: absolute;
+        transform: translate(-15px, -15px);
+        transition: 150ms ease-in-out;
+    }
+
+    .made-checked:hover {
+        background: #207D34;
+        color: white;
+    }
+
+    .made-checked:hover::after {
+        content: '';
+        width: 30px;
+        height: 30px;
+        background: url(../imgs/made2.png);
+        background-size: 30px;
+        background-repeat: no-repeat;
+        position: absolute;
+        transform: translate(-15px, -15px);
+        transition: 150ms ease-in-out;
+    }
+
 }
 
 @media (max-width: 500px){

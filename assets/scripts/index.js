@@ -58,9 +58,7 @@ function criarTarefa(indexOfR, valor, mode, bool){
 
     if(mode == 'true'){
         btnMade.parentElement.classList.toggle("made-p");
-        if(innerWidth >= 768){
-            btnMade.classList.toggle("made-checked");
-        }
+        btnMade.classList.toggle("made-checked");
     }
 
     btnMade.addEventListener("click", (e) => {
@@ -72,9 +70,7 @@ function criarTarefa(indexOfR, valor, mode, bool){
             localStorage.setItem(`ativ${btnRemove.id}`, JSON.stringify({ativ: `${valor}`, mode: `false`}));
         }
 
-        if(innerWidth >= 768){
-            btnMade.classList.toggle("made-checked");
-        }
+        btnMade.classList.toggle("made-checked");
     });
 
     btnRemove.addEventListener("click", (e) => {
